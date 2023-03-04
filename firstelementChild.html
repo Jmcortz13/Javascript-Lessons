@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript - Element Manipulation</title>
+    <style>
+        .myStyle {
+            color: rgb(148, 252, 250);
+            background-color: rgb(69, 42, 170);
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <h2>This is my heading</h2>
+        <h3>H3 as heading
+            <span>testing</span>
+        </h3>
+    </div>
+    <div class="container-fluid"><h2>This is my heading</h2><h3>H3 as heading<span>testing</span></h3></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        // jquery
+        var txt = $('.container').children(':first-child');
+        console.log(txt[0].tagName);
+
+        // javascript ES6
+        const txt2 = document.querySelector('.container-fluid').firstElementChild
+        console.log(txt2.tagName);
+
+        let first_child = document.querySelector('.container-fluid > :first-child')
+        console.log(first_child.tagName)
+    </script>
+</body>
+</html>

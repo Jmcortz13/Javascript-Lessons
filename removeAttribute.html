@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript - Element Manipulation</title>
+    <style>
+        .myStyle {
+            color: rgb(148, 252, 250);
+            background-color: rgb(69, 42, 170);
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <p id="para" class="myStyle">My paragraph 1</p>
+        <p id="para1" class="myStyle">My paragraph 2</p>
+        
+        
+        <button onclick="fun()">Click me!</button>
+            
+    </div>
+    <script>
+        function fun() {
+            document.getElementById("para").removeAttribute("id");
+            document.getElementById("para1").removeAttribute("class");
+        }
+    </script>
+</body>
+</html>

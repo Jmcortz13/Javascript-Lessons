@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript - Element Manipulation</title>
+    <style>
+        .myStyle {
+            color: rgb(148, 252, 250);
+            background-color: rgb(69, 42, 170);
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <h2>This is my heading </h2>  
+          
+        <div id="div1" data="first-div-element" style="background-color: rgb(129, 99, 185); font-size: 25px; color: rgb(39, 246, 128); border: 2px solid rgb(28, 15, 113);"> 
+        My First div element.</div>
+        <br>  
+        
+        <div id="div2" style="background-color: rgb(13, 22, 91); font-size: 25px; color: rgb(230, 244, 84); border: 2px solid rgb(255, 81, 235);">  
+        My second div element.</div>
+        <br>  
+        
+        <button onclick="myGet()">Click this</button>  
+        <p id="p"></p>  
+        <p id="p1"></p> 
+
+        <div id="apply_css_here">Apply the CSS here.</div>
+            
+    </div>
+    <script>
+        function myGet() {  
+            showAttrValue("div1", "data", "p")
+            showAttrValue("div2", "style", "p1" );  
+        }
+
+        function showAttrValue(id, attrName, ele_id ) {
+            // to get element attribute value
+            var val = document.getElementById(id).getAttribute(attrName);
+            
+            // to show element attribute value
+            document.getElementById(ele_id).innerHTML = val; 
+            
+            applyCSS('apply_css_here', val);
+        }
+        function applyCSS (id, attrValue) {
+            // to apply css by getting attribute value
+            document.getElementById(id).style = attrValue;
+        }
+
+    </script>
+</body>
+</html>
