@@ -6,10 +6,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   </head>
   <body onload="autoNumberRows()">
-    <h1 class="text-center">List of Products</h1>
     <div class="container">
-      <span class="badge text-bg-info">Total Rows: 13</span>
-      <table id="myTable" class="table mt-5 table-bordered ">
+      <h1 class="text-left my-5">List of Products</h1>
+      
+      <table id="myTable" class="table mt-3 table-striped ">
+        <p class="badge text-bg-info fs-4" >Total Rows: <span class="rowCount">13</span></p>
         <thead class="table-dark ">
         <tr >
           <th scope="col">#</th>
@@ -20,13 +21,6 @@
         </tr>
       </thead>
         <tbody id="table_body">
-          <tr>
-            
-            <td>Aria</td>
-            <td>Celestine</td>
-            <td>Cortez</td>
-            <td>Pelayo</td>
-          </tr>
         </tbody>
 
       </table>
@@ -64,18 +58,6 @@
             console.log(err);
           })
 
-    //  const fetchPromise =
-    //  fetch('https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json');
-    //  console.log(fetchPromise);
-    //  fetchPromise.then((response) => {
-    //     const jsonPromise = response.json();
-    //     console.log(jsonPromise);
-    //     jsonPromise.then((data) => {
-    //       $('#result').text(`Product name: ${data[0].name}`);
-    //     }); 
-        
-    //  });
-
-    </script>
+   </script>
   </body>
 </html>

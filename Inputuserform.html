@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" 
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+        crossorigin="anonymous">
+    <title>User List</title>
+</head>
+<body>
+
+    <div class="container" style="margin-top: 100px;">
+        <h1 class="text-left">Insert User</h1>
+        <form id="user-form">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col"><label for="firstname"></label>
+                        <input type="text" class="form-control" id="firstname" placeholder="First name">
+                    </div>
+                    <div class="col"><label for="lastname"></label>
+                        <input type="text" class="form-control" id="lastname" placeholder="Last name">
+                    </div>
+            </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                <div class="col"><label for="birthdate">Birthdate</label>
+                <input type="date" class="form-control" id="birthdate"></div>
+                <div class="col"><label for="Email">Email</label>
+                    <input type="email" class="form-control" id="email"></div>
+                    <div class="col"><label for="password">Phone</label>
+                        <input type="text" class="form-control" id="phone"></div>
+            </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="location">Address</label>
+                <input type="text" class="form-control" id="address" placeholder="1234 Main St.">
+            </div>
+            <div class="form-group">
+                <div class="row">
+                <div class="col"><label for="city">City</label>
+                <input type="text" class="form-control" id="city"></div>
+                <div class="col"><label for="province">Province</label>
+                    <select id="province" name="province" class="form-control" placeholder="Choose"></select>
+                </div>
+                    <div class="col"><label for="zip">Zip</label>
+                        <input type="text" class="form-control" id="zip"></div>
+            </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <hr />
+        <div>
+            <h1 class="text-leftS">List of Users</h1>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">Lastname</th>
+                <th scope="col">Firstname</th>
+                <th scope="col">Birthdate</th>
+                <th scope="col">Complete Address</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody id="user-list"></tbody>
+        </table>
+    </div>
+
+    <script>
+        // Array of Philippines provinces
+var provinces = [ "Choose..", "Metro Manila", "Abra", "Agusan del Norte", "Agusan del Sur", "Aklan", "Albay", "Antique", "Apayao", "Aurora", "Basilan", "Bataan", "Batanes", "Batangas", "Benguet", "Biliran", "Bohol", "Bukidnon", "Bulacan", "Cagayan", "Camarines Norte", "Camarines Sur", "Camiguin", "Capiz", "Catanduanes", "Cavite", "Cebu", "Compostela Valley", "Cotabato", "Davao del Norte", "Davao del Sur", "Davao Occidental", "Davao Oriental", "Dinagat Islands", "Eastern Samar", "Guimaras", "Ifugao", "Ilocos Norte", "Ilocos Sur", "Iloilo", "Isabela", "Kalinga", "La Union", "Laguna", "Lanao del Norte", "Lanao del Sur", "Leyte", "Maguindanao", "Marinduque", "Masbate", "Misamis Occidental", "Misamis Oriental", "Mountain Province", "Negros Occidental", "Negros Oriental", "Northern Samar", "Nueva Ecija", "Nueva Vizcaya", "Occidental Mindoro", "Oriental Mindoro", "Palawan", "Pampanga", "Pangasinan", "Quezon", "Quirino", "Rizal", "Romblon", "Samar", "Sarangani", "Siquijor", "Sorsogon", "South Cotabato", "Southern Leyte", "Sultan Kudarat", "Sulu", "Surigao del Norte", "Surigao del Sur", "Tarlac", "Tawi-Tawi", "Zambales", "Zamboanga del Norte", "Zamboanga del Sur", "Zamboanga Sibugay"];
+
+// Get the select element
+var select = document.getElementById("province");
+
+// Loop through the provinces array and create an option element for each province
+for (var i = 0; i < provinces.length; i++) {
+  var option = document.createElement("option");
+  option.text = provinces[i];
+  select.add(option);
+}
+
+// User Class
+class Users {
+    constructor(lastname, firstname, birthdate, address, email, phone){
+        this.lastname = lastname;
+        this.firstname = firstname;
+        this.birthdate = birthdate;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+    }
+}
+
+// UI class
+class UI {
+    static displayUsers(){
+        const users = Store.getUsers();
+
+        users.forEach((user) => UI.addUserToList(user));
+    }
+
+    static addUserToList(user) {
+        const list = document.querySelector('#user-list');
+
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td>${user.lastname}</td>
+            <td>${user.firstname}</td>
+            <td>${user.birthdate}</td>
+            <td>${user.address}</td>
+            <td>${user.email}</td>
+            <td>${user.phone}</td>
+            <td><a href="#" class="btn btn-danger btn-sm delete">x</a></td>
+        `;
+
+        list.appendChild(row);
+    }
+
+    static deleteUser(element){
+        if(element.classList.contains('delete')){
+            element.parentElement.parentElement.remove();
+        }
+    }
+
+    static showNotification(message, className){
+        const div = document.createElement('div');
+        div.className = `alert alert-${className}`;
+        div.appendChild(document.createTextNode(message));
+        const container = document.querySelector('.container');
+        const form = document.querySelector('#user-form');
+        container.insertBefore(div, form);
+
+    }
+
+    // clear fields method
+    static clearFileds(){
+        document.querySelector('#lastname').value = '';
+        document.querySelector('#firstname').value = '';
+        document.querySelector('#address').value = '';
+        document.querySelector('#birthdate').value = '';
+        document.querySelector('#email').value = '';
+        document.querySelector('#phone').value = '';
+
+    }
+}
+
+// Store class
+class Store {
+    static getUsers(){
+        let users;
+        if(localStorage.getItem('users') === null){
+            users = [];
+        }else{
+            users = JSON.parse(localStorage.getItem('users'));
+        }
+
+        return users;
+    }
+
+    static addUser(user){
+        const users = Store.getUsers();
+
+        users.push(user);
+
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+
+    static removeUser(id){
+        const users = Store.getUsers();
+
+        users.forEach((user, index) => {
+            if(user.id === id){
+                users.splice(index, 1);
+            }
+        });
+
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+}
+
+// Event to display users
+document.addEventListener('DOMContentLoaded', UI.displayUsers);
+
+// Event to add a user
+document.querySelector('#user-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const lastname = document.querySelector('#lastname').value;
+    const firstname = document.querySelector('#firstname').value;
+    const birthdate = document.querySelector('#birthdate').value;
+    const address = document.querySelector('#address').value;
+    const email = document.querySelector('#email').value;
+    const phone = document.querySelector('#phone').value;
+
+    // Validate
+    if(lastname === '' || firstname === '' || birthdate === ''|| address === '' || email === '' || phone === '' ){
+        UI.showNotification('All fields are required!', 'danger');
+    }else{
+        // Instantiate user
+        const user = new Users(lastname, firstname, birthdate, address, email, phone);
+
+        // Add user to table
+        UI.addUserToList(user);
+
+        // Add user to storage
+        Store.addUser(user);
+
+        // Success not
+        UI.showNotification('User added', 'success');
+
+        // Clear form fields
+        UI.clearFileds();
+
+        // console.log(user);
+    }
+});
+
+// Event to remove a user
+document.querySelector('#user-list').addEventListener('click', (e) => {
+
+    // delete user from UI
+    UI.deleteUser(e.target);
+
+    // delete user from storage
+    Store.removeUser(e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.textContent)
+
+    UI.showNotification('User Removed', 'success');
+});
+
+    </script>
+</body>
+</html>
